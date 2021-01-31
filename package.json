@@ -1,0 +1,28 @@
+{
+    "name": "delete_demo",
+    "version": "1.0.0",
+    "description": "electron_vue_test",
+    "main": "./dist/index.js",
+    "scripts": {
+        "build_vue": "npx webpack -c ./src/renderer/webpack.config.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "vue": "^3.0.5",
+        "webpack": "^5.19.0",
+        "webpack-cli": "latest"
+    },
+    "devDependencies": {
+        "@vue/compiler-sfc": "^3.0.5",
+        "css-loader": "latest",
+        "electron": "latest",
+        "file-loader": "latest",
+        "lodash": "latest",
+        "sass": "latest",
+        "sass-loader": "latest",
+        "style-loader": "latest",
+        "vue-loader": "^16.1.2"
+    }
+}
