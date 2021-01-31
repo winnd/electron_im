@@ -10,7 +10,8 @@ function createWindow () {
     }
     const win = new BrowserWindow(windowConfig)
 
-    win.loadFile('./renderer/index.html')
+    // win.loadFile(path.resolve(__dirname, 'index.html'))
+    win.loadFile('./src/renderer/index.html')
 }
 
 app.whenReady().then(createWindow)
