@@ -18,9 +18,10 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
     },
     devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-    },
+    // devServer: {
+    //     // contentBase: './dist',
+    //     contentBase: './src',
+    // },
     module: {
         rules: [
             {test: /\.vue$/, loader: 'vue-loader'},
@@ -47,9 +48,10 @@ module.exports = {
         },
     },
     externals: {
-        'electron': `require('electron')`,
+        // 'electron': `require('electron')`,
+        'electron': `electron`,
     },
-    target: 'electron-renderer',
+    // target: 'electron-renderer',
     plugins: [
         new VueLoaderPlugin(),
         // new CleanWebpackPlugin(),
