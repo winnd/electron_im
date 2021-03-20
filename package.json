@@ -2,18 +2,22 @@
   "name": "delete_demo",
   "version": "1.0.0",
   "description": "electron_vue_test",
-  "main": "./dist/main.js",
+  "main": "./src/main/index.ts",
   "scripts": {
+    "vite_dev": "vite",
+    "dev_electron_try": "tsc && electron ./dist/index.js",
+
+    "dev_electron": "electron .",
     "start_electron": "npm run build_vue & electron .",
+    "serve": "vite preview",
     "build_vue": "npx webpack -c ./webpack.config.js",
-    "run_vue": "webpack server --open",
-    "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
-  "author": "",
+  "author": "winnd",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "vue": "^3.0.7"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
@@ -21,9 +25,9 @@
     "@vue/compiler-sfc": "^3.0.5",
     "electron": "^12.0.1",
     "eslint": "^7.3.1",
+    "sass": "^1.32.8",
     "typescript": "^4.2.3",
     "vite": "^2.1.1",
-    "vue": "^3.0.5",
-    "vue-tsc": "0.0.13"
+    "vue-tsc": "0.0.14"
   }
 }

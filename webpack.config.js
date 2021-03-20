@@ -9,8 +9,8 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 module.exports = {
     mode: 'development',
     entry: {
-        bundle: 'src/renderer/index.js',
-        main: 'src/main/index.js',
+        bundle: 'src/renderer/index.ts',
+        main: 'src/main/index.ts',
     },
     output: {
         clean: true,

@@ -9,7 +9,7 @@
 
 ```
 module.exports = {
-    entry:'./index.js',
+    entry:'./index.ts',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -24,7 +24,7 @@ module.exports = {
     -- npm install --save-dev vue@next vue-loader@next @vue/compiler-sfc
     在webpack.config.js的module.rules里添加loader和vue插件
 
-⑥ 定义入口 './index.js'
+⑥ 定义入口 './index.ts'
     import App from './App.vue'
     createApp(App).mount('#app'')
 
