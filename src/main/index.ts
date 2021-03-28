@@ -11,7 +11,7 @@ function createWindow() {
         },
     }
     const win = new BrowserWindow(windowConfig)
-    win.loadURL('http://localhost:3020/')       // 静态地址 (可用于生产打包的时候)
+    win.loadURL('http://localhost:3021/')       // 静态地址 (可用于生产打包的时候)
     win.webContents.openDevTools()
 }
 
