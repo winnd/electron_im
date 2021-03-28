@@ -33,7 +33,7 @@ app.on('activate', () => {
 app.whenReady().then(() => {
     session.defaultSession.loadExtension(
         // 'C:/Users/winnd/AppData/Local/Google/Chrome/User Data/Default/Extensions/ljjemllljcmogpfapbkkighbhhppjdbg/vue-devtools-6.0.0.7_0',
-        path.resolve(__dirname, '../vue-devtools-6.0.0.7_0'),
+        path.resolve('./vue-devtools-6.0.0.7_0'),
         {allowFileAccess: true}
     ).catch((err) => {
         debugger
