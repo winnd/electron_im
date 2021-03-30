@@ -3,7 +3,7 @@ import {open} from "fs/promises";
 
 type ConsoleType = 'log' | 'warn' | 'error'
 
-enum ConsoleType2 {
+enum ConsoleTypeEnum {
     log = 'log',
     warn = 'warn',
     error = 'error'
@@ -21,13 +21,13 @@ class Log {
     }
 
     info(str: string) {
-        const packagedObj = new PackageObj(str)
+        const packagedObj = new PackageObj({info: str, type: ConsoleTypeEnum.log})
         this.writeToLogFile(packagedObj)
         this.print({type: 'log', packagedObj})
     }
 
     warning(str: string) {
-        const packagedObj = new PackageObj({info: str})
+        const packagedObj = new PackageObj({info: str, type: ConsoleTypeEnum.warn})
         this.writeToLogFile(packagedObj)
         this.print({type: 'warn', packagedObj})
     }
