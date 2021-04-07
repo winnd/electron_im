@@ -1,18 +1,23 @@
-import {createServer, InlineConfig, defineConfig} from "vite";
-import vue from "@vitejs/plugin-vue";
-import * as path from "path";
-import * as esbuild from "esbuild";
-import {ChildProcessWithoutNullStreams, exec, spawn} from "child_process";
-import {BuildOptions, ServeOptions} from "esbuild";
+import { createServer, InlineConfig, ViteDevServer } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import * as path from 'path'
+import * as esbuild from 'esbuild'
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process'
+import { BuildOptions } from 'esbuild'
 
 const ELECTRON_BIN = process.platform === 'win32' ? 'electron.cmd' : 'electron'
 
 class MainProcess {
+    server!: ViteDevServer
+
     constructor() {
-        this.runVueServer().then(() => {
-            this.buildElectron()
-            this.runMainProcess()
-        });
+        this.startApp()
+    }
+
+    async startApp() {
+        await this.runVueServer()   // 跑vue服务
+        this.buildElectron()        // 编译开发环境electron
+        this.runMainProcess()       // 运行主程序
     }
 
     async runVueServer() {
@@ -20,15 +25,10 @@ class MainProcess {
             plugins: [vue()],
             root: path.resolve(__dirname, '../src/renderer'),
             mode: 'development',
-            server: {port: 3021},
-            resolve: {
-                alias: [
-                    {find: 'src', replacement: '../'}
-                ]
-            }
+            server: { port: 3021 }
         }
-        const server = await createServer(params)
-        await server.listen()
+        this.server = await createServer(params)
+        await this.server.listen()
     }
 
     buildElectron() {
@@ -41,27 +41,39 @@ class MainProcess {
             loader: { '.ts': 'ts', }
         }
         esbuild.build(buildOptions)
-            .then((build) => { console.log('11') })
-            .catch((err) => { console.error(err)  });
+            .then(() => { console.log('electron编译完成') })
+            .catch((err) => { console.error(err) })
     }
 
     runMainProcess() {
-        const electronExePath = path.resolve(`./node_modules/.bin/${ELECTRON_BIN}`)
+        // todo 这里可以做热更新, 用 chokidar 包
+        const electronExePath = path.resolve(`./node_modules/.bin/${ ELECTRON_BIN }`)
         const appDistPath = [path.resolve('../dist/main/index.js')]
-        const electronProcess: ChildProcessWithoutNullStreams = spawn(electronExePath, appDistPath);
+        const electronProcess: ChildProcessWithoutNullStreams = spawn(electronExePath, appDistPath)
+
         electronProcess.on('error', (err) => {
             // todo 封装 err log
+            console.log(`↓↓↓↓ electronProcess 运行期间错误捕获, 以下是捕获的错误信息 ↓↓↓↓\n`)
             console.error(err)
-        });
+            console.log(`↑↑↑↑ electronProcess 错误捕获结束 ↑↑↑↑\n`)
+        })
+
+        electronProcess.on('data', () => {})
+
+        electronProcess.on('close', () => {
+            this.server
+                .close()
+                .then(() => {})
+                .catch((err) => {console.error(err)})
+            electronProcess.kill()
+        })
+
         electronProcess.stderr.on('data', (err) => {
-            console.log(`----111 start----\n`)
-            const aa = err.toString()           // todo 这里的错误显示不出来, 大概要写入文件才行
+            console.log(`↓↓↓↓ electronProcess 命令行错误捕获器启动, 以下是捕获的错误信息↓↓↓↓ \n`)
             console.log(err.toString())
-            console.log('33')
-            console.log(`----111 end----\n`)
+            console.log(`↑↑↑↑ electronProcess 错误捕获结束 ↑↑↑↑\n`)
         })
     }
 }
 
-// export const newInstance = new MainProcess()
 new MainProcess()

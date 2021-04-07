@@ -1,7 +1,6 @@
-const {app} = require('electron')
-// const {app} = require('electron')
-import { Win } from "./window/Win.js";
-import { WinConfig } from "./window/WinConfig.js";
+import { app } from "electron";
+import { Win } from "./window/Win.ts";
+import { WinConfig } from "./window/WinConfig.ts";
 
 
 lockAppInstance()

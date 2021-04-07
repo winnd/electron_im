@@ -2,23 +2,14 @@
   "name": "delete_demo",
   "version": "1.0.0",
   "description": "electron_vue_test",
-  "main": "./src/main/index.ts",
+  "//main": "./src/main/index.ts",
   "scripts": {
     "vite_dev": "vite",
-
-    "//dev_electron_try": "这是静态的",
-    "dev_electron_try": "tsc && electron ./dist/index.js",
-    "dev_electron_try2": "electron ts-node .",
-
-    "//run_script": "尝试用脚本跑",
-    "run_by_script2": "ts-node ./script/index.ts",
-    "run_by_script3": "npm run run_by_script2 & electron .",
-
-    "//dev_electron": "很早以前的版本",
-    "dev_electron": "electron .",
-    "start_electron": "npm run build_vue & electron .",
-    "serve": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "//run_by_script": "用自定义脚本跑环境",
+    "run_by_script": "ts-node ./script/index.ts",
+    "test": "echo \"还没测试\" && exit 1",
+    "//eletron_dev": "报错时调试主进程",
+    "eletron_dev": "electron ./dist/main/index.js"
   },
   "author": "winnd",
   "license": "ISC",
