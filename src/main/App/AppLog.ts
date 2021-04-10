@@ -12,7 +12,7 @@ enum ConsoleTypeEnum {
 const LOG_FILE_PATH = path.resolve('./errLog.txt')
 
 // todo 好像应该写成抽象类并继承
-class Log {
+class AppLog {
 
     #logPath
 
@@ -40,11 +40,11 @@ class Log {
 
     private print({type, packagedObj}: { type: ConsoleType, packagedObj: PackageObj }): void {
         // @ts-ignore
-        console[`${type}`](packagedObj.lineHeader)
+        console[`${type}`](packagedObj.lineHeader)      // ------2021.01.01: warning  start------
         // @ts-ignore
-        console[`${type}`](packagedObj.info)
+        console[`${type}`](packagedObj.info)            // console.log(info)
         // @ts-ignore
-        console[`${type}`](packagedObj.lineFooter)
+        console[`${type}`](packagedObj.lineFooter)      // ------2021.01.01: warning  end------
     }
 
     private async writeToLogFile(packagedObj: PackageObj) {
@@ -68,14 +68,14 @@ class PackageObj {
     }
 }
 
-export const log = new Log(LOG_FILE_PATH)
+export const appLog = new AppLog(LOG_FILE_PATH)
 
 function test() {
     const a = 'dd'
     try {
         JSON.parse(a);
     } catch (err) {
-        log.warning(err)
+        appLog.warning(err)
     }
 }
 

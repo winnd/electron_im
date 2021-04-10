@@ -1,7 +1,7 @@
 // import { BrowserWindow } from "electron";]
 import { BrowserWindow } from 'electron'
 import { WinConfig } from './WinConfig.js'
-import { pool, Pool } from './Pool'
+import { Pool } from './Pool'
 
 export class Win extends BrowserWindow {
     /**
@@ -12,6 +12,7 @@ export class Win extends BrowserWindow {
     constructor({ name, winConfig = new WinConfig() }: { name: string, winConfig?: WinConfig }) {
         super(winConfig)
         if (!Pool.winDic.get(name)) {
+            this.registerWinEvent()
             Pool.winDic.set(name, this)
         } else {
             const errInfo = `名字为${ name }的窗口已创建过, 请检查新窗口的名字`
@@ -19,9 +20,45 @@ export class Win extends BrowserWindow {
         }
     }
 
+    registerWinEvent() {
+        // todo 注册一些窗口监听事件
+    }
+
+    // todo ↓↓↓↓↓ 以下是需要根据业务重写的方法
+    minimize() {
+        super.minimize()
+    }
+
+    maximize() {
+        super.maximize()
+    }
+
+    flashFrame(flag: boolean) {
+        super.flashFrame(flag)
+    }
+
+    setTopBrowserView(browserView: Electron.BrowserView) {
+        super.setTopBrowserView(browserView)
+    }
+
+    close() {
+        super.close()
+    }
+
+    mOpenDevTools() {
+        this.webContents.openDevTools()
+    }
+
+    mCloseDevTools() {
+        this.webContents.closeDevTools()
+    }
+
+
     _windowMaker(windowConfig: WinConfig) {
         const win = new BrowserWindow(windowConfig)
     }
+
+
 
     // createWindow(windowConfig: WinConfig) {
     //     const win = new BrowserWindow(windowConfig)
