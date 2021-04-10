@@ -4,6 +4,11 @@ import { WinConfig } from './WinConfig.js'
 import { pool, Pool } from './Pool'
 
 export class Win extends BrowserWindow {
+    /**
+     * 自定义窗口, 继承于BrowserWindow
+     * @param name       窗口标识, todo 后期可扩展用于窗口title
+     * @param winConfig  自定义配置文件, 继承于BrowserWindowConstructorOptions
+     */
     constructor({ name, winConfig = new WinConfig() }: { name: string, winConfig?: WinConfig }) {
         super(winConfig)
         if (!Pool.winDic.get(name)) {

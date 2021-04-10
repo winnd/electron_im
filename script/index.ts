@@ -41,7 +41,7 @@ class MainProcess {
             loader: { '.ts': 'ts', }
         }
         esbuild.build(buildOptions)
-            .then(() => { console.log('electron编译完成') })
+            .then(() => { })
             .catch((err) => { console.error(err) })
     }
 
@@ -69,9 +69,9 @@ class MainProcess {
         })
 
         electronProcess.stderr.on('data', (err) => {
-            console.log(`↓↓↓↓ electronProcess 命令行错误捕获器启动, 以下是捕获的错误信息↓↓↓↓ \n`)
+            console.log(`=== ===↓↓↓↓ electronProcess 命令行错误捕获器启动, 以下是捕获的错误信息↓↓↓↓=== === \n`)
             console.log(err.toString())
-            console.log(`↑↑↑↑ electronProcess 错误捕获结束 ↑↑↑↑\n`)
+            console.log(`=== ===↑↑↑↑ electronProcess 错误捕获结束 ↑↑↑↑=== ===\n`)
         })
     }
 }
