@@ -2,7 +2,7 @@
 #### Technology Selection
 electron + vue3 + vite + typescript
 
-#### environment dependence: 
+#### environment dependence:
 
 - node: > 15
 
