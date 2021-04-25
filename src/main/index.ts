@@ -8,7 +8,7 @@ import { Pool } from './window/Pool'
 class AppEntry {
     constructor() {
 
-        this.handleErrorAndCrash()  // 注册崩溃及错误报告
+        this.handleErrorAndCrash();  // 注册崩溃及错误报告
         this.winHandle()            // 注册窗口事件
         // this.login().then(() => {            // todo 在登录完成后挂载全局对象
         //     (globalThis as any).app = app
@@ -115,8 +115,7 @@ class AppEntry {
 
     addVueDevToolsExtension() {
         session.defaultSession.loadExtension(
-            // 'C:/Users/winnd/AppData/Local/Google/Chrome/User Data/Default/Extensions/ljjemllljcmogpfapbkkighbhhppjdbg/6.0.0.7_0',
-            path.resolve('./vue-devtools-6.0.0.7_0'),
+            path.resolve('./tools/vue-devtools-6.0.0.7_0'),
             { allowFileAccess: true }
         ).catch((err) => {
             console.error(err)
