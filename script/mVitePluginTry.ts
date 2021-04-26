@@ -4,7 +4,6 @@ import path from 'path'
 // import eslint from 'eslint'
 const { ESLint } = require('eslint')
 const { createFilter } = require('@rollup/pluginutils')
-const eslint = require('rollup-plugin-eslint').eslint
 
 // import eslint from '@rollup/plugin-eslint'
 function normalizePath(id: string) {

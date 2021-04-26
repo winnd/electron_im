@@ -2,7 +2,6 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { InlineConfig } from 'vite'
 import mViteEslint from './mVitePluginTry'
-const eslint = require('rollup-plugin-eslint').eslint
 
 const rendererPath = path.resolve(__dirname, '../src/renderer')
 
