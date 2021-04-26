@@ -10,10 +10,10 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "outDir": "dist",
-    "baseUrl": ".",
     "lib": ["esnext", "dom"],
+    "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"]
+      "renderer": ["src/renderer/*"]
     }
   },
   "include": [

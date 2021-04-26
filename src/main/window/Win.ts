@@ -1,5 +1,5 @@
 // import { BrowserWindow } from "electron";]
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, BrowserView } from 'electron'
 import { WinConfig } from './WinConfig.js'
 import { Pool } from './Pool'
 
@@ -37,7 +37,7 @@ export class Win extends BrowserWindow {
         super.flashFrame(flag)
     }
 
-    setTopBrowserView(browserView: Electron.BrowserView) {
+    setTopBrowserView(browserView: BrowserView) {
         super.setTopBrowserView(browserView)
     }
 
@@ -54,10 +54,9 @@ export class Win extends BrowserWindow {
     }
 
 
-    _windowMaker(windowConfig: WinConfig) {
-        const win = new BrowserWindow(windowConfig)
-    }
-
+    // _windowMaker(windowConfig: WinConfig) {
+    //     const win = new BrowserWindow(windowConfig)
+    // }
 
 
     // createWindow(windowConfig: WinConfig) {

@@ -1,19 +1,20 @@
 <template>
   <div>进入页面
-    <HelloWorld msg="aaa"/>
+    <HelloWorld :msg="'aaa'" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from 'renderer/components/HelloWorld.vue'
 
 export default {
-  name: 'App',
+  name      : 'App',
   components: {
     HelloWorld,
   },
   setup() {
     console.log('aaa')
+    return {}
   },
 }
 </script>

@@ -1,14 +1,14 @@
-import { app, BrowserWindow, session, crashReporter, CrashReporterStartOptions, WebContents, RenderProcessGoneDetails } from 'electron'
+import { app, BrowserWindow, crashReporter, CrashReporterStartOptions, RenderProcessGoneDetails, session, WebContents } from 'electron'
 import * as path from 'path'
 import { Win } from './window/Win'
 import { Pool } from './window/Pool'
 
-// app.commandLine.appendSwitch('--disable-site-isolation-trials')  // todo 这个在跨域时要打开
+// app.commandLine.appendSwitch('--disable-site-isolation-trials')  // todo 这个在生产处理跨域时要打开 要根据环境变量进行判断
 
 class AppEntry {
     constructor() {
 
-        this.handleErrorAndCrash();  // 注册崩溃及错误报告
+        this.handleErrorAndCrash()  // 注册崩溃及错误报告
         this.winHandle()            // 注册窗口事件
         // this.login().then(() => {            // todo 在登录完成后挂载全局对象
         //     (globalThis as any).app = app
@@ -35,6 +35,35 @@ class AppEntry {
         }
     }
 
+    initMainWin() {
+        const mainWin = new Win({ name: 'main' })
+        mainWin.loadURL('http://localhost:3021/')       // 静态地址 (可用于生产打包的时候)
+        mainWin.mOpenDevTools()
+    }
+
+    winHandle() {
+        app.on('window-all-closed', () => {
+            if (process.platform !== 'darwin') {
+                app.quit()
+            }
+        })
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) {
+                this.initMainWin()
+            }
+        })
+    }
+
+    addVueDevToolsExtension() {
+        session.defaultSession.loadExtension(
+            path.resolve('./tools/vue-devtools-6.0.0.7_0'),
+            { allowFileAccess: true }
+        ).catch((err) => {
+            console.error(err)
+        })
+    }
+
     // 崩溃处理
     private handleErrorAndCrash() {
         catchElectronCrash()        // electron 抓到的崩溃报告 生成 .dmp文件
@@ -47,7 +76,7 @@ class AppEntry {
         function catchElectronCrash() {
             const crashDumpsDir = app.getPath('crashDumps')
             const crashConfig: CrashReporterStartOptions = {
-                submitURL: crashDumpsDir,
+                submitURL     : crashDumpsDir,
                 uploadToServer: false
             }
             crashReporter.start(crashConfig) // todo 这里以后要搭建 Sentry.io 崩溃报告分析服务器, 要不然本地的崩溃报告看不懂
@@ -91,35 +120,6 @@ class AppEntry {
             // todo 这里要封装error组件, 继承于原生js的Error, 现在先暂时这么用
             console.log(title, err)
         }
-    }
-
-    initMainWin() {
-        const mainWin = new Win({ name: 'main' })
-        mainWin.loadURL('http://localhost:3021/')       // 静态地址 (可用于生产打包的时候)
-        mainWin.mOpenDevTools()
-    }
-
-    winHandle() {
-        app.on('window-all-closed', () => {
-            if (process.platform !== 'darwin') {
-                app.quit()
-            }
-        })
-
-        app.on('activate', () => {
-            if (BrowserWindow.getAllWindows().length === 0) {
-                this.initMainWin()
-            }
-        })
-    }
-
-    addVueDevToolsExtension() {
-        session.defaultSession.loadExtension(
-            path.resolve('./tools/vue-devtools-6.0.0.7_0'),
-            { allowFileAccess: true }
-        ).catch((err) => {
-            console.error(err)
-        })
     }
 }
 

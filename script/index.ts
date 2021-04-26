@@ -1,9 +1,9 @@
-import { createServer, InlineConfig, ViteDevServer } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { createServer, ViteDevServer } from 'vite'
 import * as path from 'path'
 import * as esbuild from 'esbuild'
-import { ChildProcessWithoutNullStreams, spawn } from 'child_process'
 import { BuildOptions } from 'esbuild'
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process'
+import viteConfig from './viteConfig'
 
 const ELECTRON_BIN = process.platform === 'win32' ? 'electron.cmd' : 'electron'
 
@@ -21,28 +21,22 @@ class MainProcess {
     }
 
     async runVueServer() {
-        const params: InlineConfig = {
-            plugins: [vue()],
-            root: path.resolve(__dirname, '../src/renderer'),
-            mode: 'development',
-            server: { port: 3021 }
-        }
-        this.server = await createServer(params)
+        this.server = await createServer(viteConfig)
         await this.server.listen()
     }
 
     buildElectron() {
         const buildOptions: BuildOptions = {
-            platform: 'node',
-            bundle: true,
-            outfile: '../dist/main/index.js',
+            platform   : 'node',
+            bundle     : true,
+            outfile    : '../dist/main/index.js',
             entryPoints: [path.resolve('./src/main/index.ts')],
-            external: ['electron', 'vue-devtools-6.0.0.7_0'],
-            loader: { '.ts': 'ts', }
+            external   : ['electron', 'vue-devtools-6.0.0.7_0'],
+            loader     : { '.ts': 'ts' }
         }
         esbuild.build(buildOptions)
-            .then(() => { })
-            .catch((err) => { console.error(err) })
+               .then(() => { })
+               .catch((err) => { console.error(err)})
     }
 
     runMainProcess() {
@@ -58,13 +52,13 @@ class MainProcess {
             console.log(`↑↑↑↑ electronProcess 错误捕获结束 ↑↑↑↑\n`)
         })
 
-        electronProcess.on('data', () => {})
+        electronProcess.on('data', () => { })
 
         electronProcess.on('close', () => {
             this.server
                 .close()
-                .then(() => {})
-                .catch((err) => {console.error(err)})
+                .then(() => { })
+                .catch((err) => { console.error(err) })
             electronProcess.kill()
         })
 

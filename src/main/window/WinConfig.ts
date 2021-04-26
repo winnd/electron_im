@@ -8,13 +8,13 @@ export class WinConfig implements BrowserWindowConstructorOptions {
     // thickFrame // todo 可能不需要
     center: boolean = true
     webpreferences: WebPreferences = {
-        nodeIntegration: true,
-        nodeIntegrationInSubFrames: true,
-        nodeIntegrationInWorker: true,
-        worldSafeExecuteJavaScript: true, // todo 可能不需要
-        contextIsolation: false, // todo 可能不需要
-        webSecurity: false, // 同源策略
+        nodeIntegration                  : true,
+        nodeIntegrationInSubFrames       : true,
+        nodeIntegrationInWorker          : true,
+        worldSafeExecuteJavaScript       : true, // todo 可能不需要
+        contextIsolation                 : false, // todo 可能不需要
+        webSecurity                      : false, // 同源策略
         disableHtmlFullscreenWindowResize: false, // todo 可能不需要
-        enableWebSQL: true,
+        enableWebSQL                     : true,
     }
 }

@@ -4,17 +4,15 @@
   "description": "electron_vue_test",
   "//main": "./src/main/index.ts",
   "scripts": {
-    "vite_dev": "vite",
-    "//run_by_script": "用自定义脚本跑环境",
-    "run_by_script": "ts-node ./script/index.ts",
-    "test": "echo \"还没测试\" && exit 1",
-    "//eletron_dev": "报错时调试主进程",
-    "eletron_dev": "electron ./dist/main/index.js"
+    "start": "ts-node ./script/index.ts",
+    "//eletron_dev": "无报错但运行不起来时调试主进程",
+    "eletron_dev": "electron ./dist/main/index.js",
+    "dev_renderer": "vite",
+    "test": "echo \"还没加测试\" && exit 1"
   },
   "author": "winnd",
   "license": "ISC",
   "dependencies": {
-    "electron-esbuild": "^1.3.1",
     "vue": "^3.0.7"
   },
   "devDependenciesComments": {
@@ -22,18 +20,21 @@
     "ts-node": "这个东西怕是跟vite有冲突, 挂上了以后直接用'vite'跑步起来, 要creatServer()才行"
   },
   "devDependencies": {
+    "@rollup/pluginutils": "^4.1.0",
     "@types/node": "^14.14.37",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
-    "@typescript-eslint/parser": "^3.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.5",
     "electron": "^12.0.1",
+    "electron-esbuild": "^1.4.1",
     "esbuild": "^0.10.2",
-    "eslint": "^7.3.1",
+    "eslint": "^7.25.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "rollup-plugin-eslint": "^7.0.0",
     "sass": "^1.32.8",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.3",
-    "vite": "^2.1.1",
-    "vue-tsc": "0.0.14"
+    "typescript": "^3.9.9",
+    "vite": "^2.1.1"
   }
 }
