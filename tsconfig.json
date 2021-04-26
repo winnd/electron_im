@@ -11,10 +11,13 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "lib": ["esnext", "dom"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "renderer": ["src/renderer/*"]
-    }
+    },
+    "types": ["node", "electron" ]
   },
   "include": [
     "src/**/*"
