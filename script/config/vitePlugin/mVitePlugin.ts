@@ -16,7 +16,11 @@ function normalizePath(id: string) {
 let pluginHost = 'rollup'
 let globalErrors = false
 
-const mViteEslint = (options = { 'include': ['src/**/*.vue', 'src/**/*.js'] } as any): Plugin => {
+/**
+ * 自己组装的vite的eslint插件, vue-eslint-parser不好用
+ * @param options
+ */
+const mViteEslintPlugin = (options = { 'include': ['src/**/*.vue', 'src/**/*.js'] } as any): Plugin => {
     const eslint = new ESLint()
     const filter = createFilter(options.include, options.exclude || /node_modules/)
     return {
@@ -64,5 +68,5 @@ const mViteEslint = (options = { 'include': ['src/**/*.vue', 'src/**/*.js'] } as
 
     }
 }
-export default mViteEslint
+export default mViteEslintPlugin
 

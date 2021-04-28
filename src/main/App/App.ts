@@ -4,6 +4,9 @@ import { protocol } from './Protocol'
 import { tray } from './Tray'
 import { shortCut } from './ShortCut'
 
+/**
+ * 应用总线
+ */
 class App {
     log = appLog
     tray = tray

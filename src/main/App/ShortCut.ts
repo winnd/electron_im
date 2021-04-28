@@ -1,5 +1,8 @@
 import { app } from 'electron'
 
+/**
+ * 快捷键
+ */
 class ShortCut {
     constructor() {
     }

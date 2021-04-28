@@ -1,40 +1,34 @@
-import { createServer, ViteDevServer } from 'vite'
+import { createServer, InlineConfig, ViteDevServer } from 'vite'
 import * as path from 'path'
 import * as esbuild from 'esbuild'
 import { BuildOptions } from 'esbuild'
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process'
-import viteConfig from './viteConfig'
+
+const { viteConfig } = require('./config/viteConfig')   // ts-node 的import不起效
+const { buildConfig } = require('./config/buildConfig')
 
 const ELECTRON_BIN = process.platform === 'win32' ? 'electron.cmd' : 'electron'
 
 class MainProcess {
-    server!: ViteDevServer
+    viteServer!: ViteDevServer
 
     constructor() {
         this.startApp()
     }
 
     async startApp() {
-        await this.runVueServer()   // 跑vue服务
-        this.buildElectron()        // 编译开发环境electron
-        this.runMainProcess()       // 运行主程序
+        await this.runVueServer(viteConfig)    // 跑vue服务
+        this.buildElectron(buildConfig)        // 编译开发环境electron
+        this.runMainProcess()                  // 运行主程序
     }
 
-    async runVueServer() {
-        this.server = await createServer(viteConfig)
-        await this.server.listen()
+    async runVueServer(viteConfig: InlineConfig) {
+        this.viteServer = await createServer(viteConfig)
+        await this.viteServer.listen()
     }
 
-    buildElectron() {
-        const buildOptions: BuildOptions = {
-            platform   : 'node',
-            bundle     : true,
-            outfile    : '../dist/main/index.js',
-            entryPoints: [path.resolve('./src/main/index.ts')],
-            external   : ['electron', 'vue-devtools-6.0.0.7_0'],
-            loader     : { '.ts': 'ts' }
-        }
-        esbuild.build(buildOptions)
+    buildElectron(buildConfig: BuildOptions) {
+        esbuild.build(buildConfig)
                .then(() => { })
                .catch((err) => { console.error(err)})
     }
@@ -55,7 +49,7 @@ class MainProcess {
         electronProcess.on('data', () => { })
 
         electronProcess.on('close', () => {
-            this.server
+            this.viteServer
                 .close()
                 .then(() => { })
                 .catch((err) => { console.error(err) })

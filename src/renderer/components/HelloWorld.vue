@@ -8,7 +8,7 @@
 <script lang="ts">
 import img1 from 'renderer/assert/img/1.png'
 import { defineComponent, ref } from 'vue'
-import { test1 } from 'renderer/components/test'
+import { test1 } from 'renderer/components/typescriptTest'
 
 export default defineComponent({
   name      : 'HelloWord',
