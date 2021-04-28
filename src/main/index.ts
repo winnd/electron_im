@@ -7,12 +7,8 @@ import { Pool } from './window/Pool'
 
 class AppEntry {
     constructor() {
-
         this.handleErrorAndCrash()  // 注册崩溃及错误报告
         this.winHandle()            // 注册窗口事件
-        // this.login().then(() => {            // todo 在登录完成后挂载全局对象
-        //     (globalThis as any).app = app
-        // })
 
         // 启动实例
         const getInstanceLock = app.requestSingleInstanceLock()
@@ -20,7 +16,7 @@ class AppEntry {
             app.quit()
         } else {
             app.whenReady().then(() => {
-                this.initMainWin()
+                this.initMainWindow()
                 this.addVueDevToolsExtension()
             })
             app.on('second-instance', () => {
@@ -35,7 +31,7 @@ class AppEntry {
         }
     }
 
-    initMainWin() {
+    initMainWindow() {
         const mainWin = new Win({ name: 'main' })
         mainWin.loadURL('http://localhost:3021/')       // 静态地址 (可用于生产打包的时候)
         mainWin.mOpenDevTools()
@@ -50,7 +46,7 @@ class AppEntry {
 
         app.on('activate', () => {
             if (BrowserWindow.getAllWindows().length === 0) {
-                this.initMainWin()
+                this.initMainWindow()
             }
         })
     }
